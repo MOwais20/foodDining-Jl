@@ -9,7 +9,9 @@
 
       <v-col :cols="$vuetify.breakpoint.mobile ? 12 : 9">
         <v-card flat outlined>
-          <v-card-text> </v-card-text>
+          <v-card-text>
+            <MainView />
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
