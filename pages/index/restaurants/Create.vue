@@ -24,16 +24,18 @@ export default UserModel -->
 
 <template>
   <div>
-    <v-form>
+    <v-form ref="createData">
       <v-card class="pa-2" flat outlined>
         <v-row>
           <v-col cols="6">
             <v-text-field
               label="Name"
+              rule
               dense
               class="px-0"
               outlined
               hide-details
+              :rules="[rules.required]"
               v-model="restaurantData.name"
             />
           </v-col>
@@ -41,6 +43,7 @@ export default UserModel -->
           <v-col cols="6">
             <v-text-field
               v-model="restaurantData.price_range"
+              :rules="[rules.required]"
               label="Price Range"
               type="number"
               dense
@@ -53,6 +56,7 @@ export default UserModel -->
           <v-col cols="6">
             <v-select
               v-model="restaurantData.category"
+              :rules="[(v) => !!v || 'Item is required']"
               multiple
               label="Category"
               dense
@@ -65,6 +69,7 @@ export default UserModel -->
           <v-col cols="6">
             <v-text-field
               v-model="restaurantData.location.city"
+              :rules="[rules.required]"
               label="City"
               dense
               outlined
@@ -75,6 +80,7 @@ export default UserModel -->
           <v-col cols="6">
             <v-text-field
               v-model="restaurantData.location.country"
+              :rules="[rules.required]"
               label="Country"
               dense
               outlined
@@ -96,6 +102,7 @@ export default UserModel -->
                 <v-text-field
                   v-model="restaurantData.timings.open"
                   label="Timing Open"
+                  :rules="[rules.required]"
                   hide-details
                   outlined
                   dense
@@ -134,6 +141,7 @@ export default UserModel -->
                 <v-text-field
                   v-model="restaurantData.timings.close"
                   label="Timing Close"
+                  :rules="[rules.required]"
                   hide-details
                   outlined
                   dense
@@ -162,6 +170,7 @@ export default UserModel -->
             <v-textarea
               label="Description"
               v-model="restaurantData.description"
+              :rules="[rules.required]"
               dense
               auto-grow
               outlined
@@ -170,12 +179,15 @@ export default UserModel -->
           </v-col>
 
           <v-col cols="12">
-            <v-file-input
+            <v-text-field
+              label="Picture URL"
               v-model="restaurantData.picture"
-              label="Picture"
-              outlined
+              :rules="[rules.required]"
               dense
-            ></v-file-input>
+              class="px-0"
+              outlined
+              hide-details
+            />
           </v-col>
         </v-row>
 
@@ -214,6 +226,7 @@ export default UserModel -->
                     v-model="restaurantData.menu.name"
                     dense
                     class="px-0"
+                    :rules="[rules.required]"
                     outlined
                     hide-details
                   />
@@ -225,6 +238,7 @@ export default UserModel -->
                     v-model="restaurantData.menu.price"
                     type="number"
                     dense
+                    :rules="[rules.required]"
                     class="px-0"
                     outlined
                     hide-details
@@ -236,6 +250,7 @@ export default UserModel -->
                     multiple
                     v-model="restaurantData.menu.category"
                     label="Category"
+                    :rules="[(v) => !!v || 'Item is required']"
                     dense
                     class="px-0"
                     outlined
@@ -247,6 +262,7 @@ export default UserModel -->
                   <v-textarea
                     auto-grow
                     v-model="restaurantData.menu.description"
+                    :rules="[(v) => !!v || 'Item is required']"
                     label="Description"
                     dense
                     outlined
@@ -255,23 +271,33 @@ export default UserModel -->
                 </v-col>
 
                 <v-col cols="12">
-                  <v-file-input
+                  <v-text-field
+                    label="Menu Picture URL"
                     v-model="restaurantData.menu.picture"
-                    label="Picture"
-                    outlined
+                    :rules="[(v) => !!v || 'Item is required']"
                     dense
-                  ></v-file-input>
+                    class="px-0"
+                    outlined
+                    hide-details
+                  />
                 </v-col>
               </v-row>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
+
+        <v-card-actions class="my-5">
+          <v-spacer></v-spacer>
+          <v-btn @click="submit" color="success"> Submit </v-btn>
+        </v-card-actions>
       </v-card>
     </v-form>
   </div>
 </template>
 
 <script>
+// import saveFileToFirebase from "@/plugins/firebase.js";
+
 export default {
   data: () => ({
     date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
@@ -280,6 +306,9 @@ export default {
     menu: false,
     modal: false,
     menu2: false,
+    rules: {
+      required: (value) => !!value || "Required.",
+    },
     restaurantData: {
       name: null,
       picture: null,
@@ -300,6 +329,23 @@ export default {
     },
   }),
   methods: {
+    submit() {
+      if (this.$refs?.createData?.validate()) {
+        this.$swal.fire({
+          toast: true,
+          timerProgressBar: true,
+          position: "top-end",
+          icon: "error",
+          text: "Items added.",
+          showConfirmButton: false,
+          timer: 2000,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", this.$swal.stopTimer);
+            toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+          },
+        });
+      }
+    },
     addItemInMenu() {
       this.restaurantData.menu.push({
         name: null,

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-navigation-drawer
+    <!-- <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
@@ -23,18 +23,20 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
     <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <!-- <v-app-bar-nav-icon @click.stop="drawer = !drawer" /> -->
 
-      <v-toolbar-title>
-        <v-img
-          height="50"
-          width="190"
-          src="/img/diningLogo-transparent.png"
-          contain
-        ></v-img>
-      </v-toolbar-title>
+      <nuxt-link to="/">
+        <v-toolbar-title>
+          <v-img
+            height="50"
+            width="190"
+            src="/img/diningLogo-transparent.png"
+            contain
+          ></v-img>
+        </v-toolbar-title>
+      </nuxt-link>
 
       <SearchBar class="mx-5" v-if="!$vuetify.breakpoint.mobile" />
 

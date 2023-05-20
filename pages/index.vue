@@ -2,19 +2,26 @@
   <div>
     <SearchBar class="mb-5" v-if="$vuetify.breakpoint.mobile" />
 
-    <v-row justify="center" align="start">
-      <v-col v-if="!$vuetify.breakpoint.mobile" cols="3">
-        <Filters />
-      </v-col>
+    <v-card
+      flat
+      outlined
+      rounded="xl"
+      height="50"
+      max-width="600"
+      class="primary mx-auto d-flex align-center mb-3"
+    >
+      <v-card-text class="d-flex align-center justify-space-between">
+        <v-btn to="/restaurants" small depressed rounded> Restaurants </v-btn>
 
-      <v-col :cols="$vuetify.breakpoint.mobile ? 12 : 9">
-        <v-card flat outlined>
-          <v-card-text>
-            <MainView />
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
+        <v-btn to="/orders" small depressed rounded> Orders </v-btn>
+
+        <v-btn to="/reservations" small depressed rounded> Reservations </v-btn>
+
+        <v-btn to="/track-order" small depressed rounded> Track Order </v-btn>
+      </v-card-text>
+    </v-card>
+
+    <router-view />
   </div>
 </template>
 
