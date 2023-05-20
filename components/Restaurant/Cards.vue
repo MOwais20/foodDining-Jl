@@ -8,6 +8,7 @@
       :loading="loading"
       class="d-flex align-start my-4"
       min-height="250"
+      @click="showRestaurants"
     >
       <v-row no-gutters>
         <v-col cols="4">
@@ -90,8 +91,10 @@ export default {
   methods: {
     reserve() {
       this.loading = true;
-
       setTimeout(() => (this.loading = false), 2000);
+    },
+    showRestaurants() {
+      this.$router.push(`/restaurants/${1}`);
     },
   },
 };
