@@ -53,6 +53,7 @@ export default {
     // https://go.nuxtjs.dev/pwa
     "@nuxtjs/pwa",
     "vue-sweetalert2/nuxt",
+    "@nuxtjs/auth-next",
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -60,6 +61,36 @@ export default {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: "http://localhost:4000",
     progress: false,
+  },
+
+  auth: {
+    watchLoggedIn: true,
+    rewriteRedirects: false,
+    redirect: {
+      home: "/users",
+      logout: "/login",
+    },
+    localStorage: {
+      prefix: "previsit",
+    },
+    strategies: {
+      local: {
+        token: {
+          property: "data.token",
+          name: "food-dining-token",
+          type: false,
+        },
+        user: {
+          property: "data",
+          autoFetch: true,
+        },
+        endpoints: {
+          login: { url: "/user/login", method: "post" },
+          user: { url: "/user", method: "get" },
+          logout: false,
+        },
+      },
+    },
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

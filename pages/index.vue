@@ -6,18 +6,26 @@
       flat
       outlined
       rounded="xl"
-      height="50"
+      min-height="50"
       max-width="600"
       class="primary mx-auto d-flex align-center mb-3"
     >
-      <v-card-text class="d-flex align-center justify-space-between">
-        <v-btn to="/restaurants" small depressed rounded> Restaurants </v-btn>
+      <v-card-text class="d-flex flex-wrap align-center justify-space-between">
+        <v-btn class="my-1" to="/restaurants" small depressed rounded>
+          Restaurants
+        </v-btn>
 
-        <v-btn to="/orders" small depressed rounded> Orders </v-btn>
+        <v-btn class="my-1" to="/orders" small depressed rounded>
+          Orders
+        </v-btn>
 
-        <v-btn to="/reservations" small depressed rounded> Reservations </v-btn>
+        <v-btn class="my-1" to="/reservations" small depressed rounded>
+          Reservations
+        </v-btn>
 
-        <v-btn to="/track-order" small depressed rounded> Track Order </v-btn>
+        <v-btn class="my-1" to="/track-order" small depressed rounded>
+          Track Order
+        </v-btn>
       </v-card-text>
     </v-card>
 
@@ -30,6 +38,9 @@ export default {
   name: "IndexPage",
   data() {
     return {};
+  },
+  created() {
+    if (this.$route.path == "/") this.$router.push("/restaurants");
   },
 };
 </script>

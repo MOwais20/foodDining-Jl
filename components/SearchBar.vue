@@ -1,10 +1,5 @@
 <template>
-  <v-text-field
-    label="Search Restaurants, Menus"
-    class="px-0"
-    solo
-    hide-details
-  >
+  <v-text-field label="Search Restaurants" class="px-0" solo hide-details>
     <template v-slot:append>
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
@@ -12,7 +7,7 @@
             <v-icon dark> mdi-magnify </v-icon>
           </div>
         </template>
-        I'm a tooltip
+        Search restaurants
       </v-tooltip>
     </template>
   </v-text-field>
