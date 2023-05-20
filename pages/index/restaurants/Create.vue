@@ -308,6 +308,7 @@ export default {
       .toISOString()
       .substr(0, 10),
     menu: false,
+    loading: false,
     modal: false,
     menu2: false,
     rules: {
