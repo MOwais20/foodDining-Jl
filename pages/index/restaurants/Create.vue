@@ -56,6 +56,7 @@ export default UserModel -->
           <v-col cols="6">
             <v-select
               v-model="restaurantData.category"
+              :items="categoryTypes"
               :rules="[(v) => !!v || 'Item is required']"
               multiple
               label="Category"
@@ -249,6 +250,7 @@ export default UserModel -->
                   <v-select
                     multiple
                     v-model="restaurantData.menu.category"
+                    :items="categoryTypes"
                     label="Category"
                     :rules="[(v) => !!v || 'Item is required']"
                     dense
@@ -288,7 +290,9 @@ export default UserModel -->
 
         <v-card-actions class="my-5">
           <v-spacer></v-spacer>
-          <v-btn @click="submit" color="success"> Submit </v-btn>
+          <v-btn :loading="loading" @click="submit" color="success">
+            Submit
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-form>
@@ -309,6 +313,7 @@ export default {
     rules: {
       required: (value) => !!value || "Required.",
     },
+    categoryTypes: ["BBQ", "Fast Food", "Desi", "Thai", "Chinese"],
     restaurantData: {
       name: null,
       picture: null,
@@ -328,22 +333,31 @@ export default {
       ],
     },
   }),
+  created() {
+    console.log("API", this.$api.diningService.createRestaurants());
+  },
   methods: {
     submit() {
       if (this.$refs?.createData?.validate()) {
-        this.$swal.fire({
-          toast: true,
-          timerProgressBar: true,
-          position: "top-end",
-          icon: "error",
-          text: "Items added.",
-          showConfirmButton: false,
-          timer: 2000,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", this.$swal.stopTimer);
-            toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-          },
-        });
+        this.loading = true;
+        this.$api.diningService
+          .createRestaurants(this.restaurantData)
+          .then((response) => {
+            this.$swal.fire({
+              toast: true,
+              timerProgressBar: true,
+              position: "top-end",
+              icon: "success",
+              text: response?.message || "Items added.",
+              showConfirmButton: false,
+              timer: 2000,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", this.$swal.stopTimer);
+                toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+              },
+            });
+          })
+          .finally(() => (this.loading = false));
       }
     },
     addItemInMenu() {
