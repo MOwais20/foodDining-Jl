@@ -14,7 +14,13 @@ export default {
       { hid: "description", name: "description", content: "" },
       { name: "format-detection", content: "telephone=no" },
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      // {
+      //   rel: "stylesheet",
+      //   href: "https://fonts.googleapis.com/css?family=Poppins",
+      // },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -30,8 +36,16 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     "@nuxtjs/vuetify",
+    "@nuxtjs/google-fonts",
   ],
 
+  googleFonts: {
+    prefetch: true,
+    display: "swap",
+    families: {
+      Poppins: true,
+    },
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
@@ -59,8 +73,17 @@ export default {
     theme: {
       dark: false,
       themes: {
+        light: {
+          primary: "#0092d8",
+          accent: colors.grey.lighten1,
+          secondary: colors.amber.lighten1,
+          info: colors.teal.lighten1,
+          warning: colors.amber.base,
+          error: colors.deepOrange.accent4,
+          success: colors.green.accent3,
+        },
         dark: {
-          primary: colors.blue.darken2,
+          primary: "#0092d8",
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
