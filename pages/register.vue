@@ -11,7 +11,7 @@
         flat
         width="500"
       >
-        <v-form ref="LoginForm">
+        <v-form ref="registerForm">
           <!-- Logo -->
 
           <v-card outlined class="mt-4">
@@ -29,12 +29,34 @@
           <v-text-field
             class="mt-4"
             solo
+            v-model="loginData.name"
+            hide-details
+            required
+            single-line
+            placeholder="Name"
+            @keyup.enter="initRegister()"
+          ></v-text-field>
+
+          <v-text-field
+            class="mt-4"
+            solo
+            v-model="loginData.phone"
+            hide-details
+            required
+            single-line
+            placeholder="Phone"
+            @keyup.enter="initRegister()"
+          ></v-text-field>
+
+          <v-text-field
+            class="mt-4"
+            solo
             v-model="loginData.email"
             required
             single-line
             placeholder="Email"
             :rules="emailRules"
-            @keyup.enter="initLogin()"
+            @keyup.enter="initRegister()"
           ></v-text-field>
 
           <v-text-field
@@ -46,7 +68,7 @@
             :type="showPassword ? 'text' : 'password'"
             :append-icon="showPassword ? 'mdi-eye-outline' : 'eye-off-outline'"
             @click:append="showPassword = !showPassword"
-            @keyup.enter="initLogin()"
+            @keyup.enter="initRegister()"
           ></v-text-field>
 
           <v-btn
@@ -55,9 +77,9 @@
             height="45"
             class="secondary text-capitalize"
             :loading="loader"
-            @click="initLogin()"
+            @click="initRegister()"
           >
-            Login
+            Register
           </v-btn>
 
           <div
@@ -91,6 +113,8 @@ export default {
       loginData: {
         email: null,
         password: null,
+        phone: null,
+        gender: null,
       },
       showPassword: false,
       emailRules: [
@@ -100,39 +124,26 @@ export default {
     };
   },
   methods: {
-    async initLogin() {
-      if (this.$refs.LoginForm.validate()) {
-        try {
-          this.loader = true;
-          await this.$auth
-            .loginWith("local", {
-              data: {
-                email: this.loginData.email,
-                password: this.loginData.password,
-              },
-            })
-            .finally(() => {
-              this.loader = false;
-            });
-
-          this.$swal.fire({
-            toast: true,
-            timerProgressBar: true,
-            position: "top-end",
-            icon: "error",
-            text: "Account type not permitted.",
-            showConfirmButton: false,
-            timer: 2000,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", this.$swal.stopTimer);
-              toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-            },
-          });
-          this.$auth.logout();
-        } catch (error) {
-          console.log(error);
-        }
-      }
+    async initRegister() {
+      this.$router.push("/restaurants/");
+      // if (this.$refs.registerForm.validate()) {
+      //   try {
+      //     this.loader = true;
+      //     await this.$api.diningService
+      //       .signup({
+      //         email: this.loginData.email,
+      //         password: this.loginData.password,
+      //         phone: this.loginData.phone,
+      //         gender: 1,
+      //       })
+      //       .finally(() => {
+      //         this.loader = false;
+      //       });
+      //     //
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // }
     },
   },
 };

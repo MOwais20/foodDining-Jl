@@ -67,7 +67,7 @@ export default {
     watchLoggedIn: true,
     rewriteRedirects: false,
     redirect: {
-      home: "/users",
+      home: "/restaurants",
       logout: "/login",
     },
     localStorage: {
@@ -86,7 +86,7 @@ export default {
         },
         endpoints: {
           login: { url: "/user/login", method: "post" },
-          user: { url: "/user", method: "get" },
+          // user: { url: "/user", method: "get" },
           logout: false,
         },
       },

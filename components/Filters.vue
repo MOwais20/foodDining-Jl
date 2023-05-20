@@ -6,9 +6,9 @@
         <h3>Cuisine Types</h3>
         <div>
           <v-checkbox
-            v-for="(type, index) in cuisineTypes"
-            :key="`type-${index + 1}`"
-            :label="`Checkbox`"
+            v-for="(type, i) in cuisineTypes"
+            :key="i"
+            :label="type"
             dense
             hide-details
           ></v-checkbox>
@@ -47,7 +47,7 @@
 export default {
   data() {
     return {
-      cuisineTypes: [1, 2, 3, 5, 5],
+      cuisineTypes: ["BBQ", "Fast Food", "Desi", "Thai", "Chinese"],
       category: ["Sea Food", "BBQ", "Chineese"],
       priceRange: 0,
     };

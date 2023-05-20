@@ -103,38 +103,24 @@ export default {
   },
   methods: {
     async initLogin() {
-      if (this.$refs.LoginForm.validate()) {
-        try {
-          this.loader = true;
-          await this.$auth
-            .loginWith("local", {
-              data: {
-                email: this.loginData.email,
-                password: this.loginData.password,
-              },
-            })
-            .finally(() => {
-              this.loader = false;
-            });
-
-          this.$swal.fire({
-            toast: true,
-            timerProgressBar: true,
-            position: "top-end",
-            icon: "error",
-            text: "Account type not permitted.",
-            showConfirmButton: false,
-            timer: 2000,
-            didOpen: (toast) => {
-              toast.addEventListener("mouseenter", this.$swal.stopTimer);
-              toast.addEventListener("mouseleave", this.$swal.resumeTimer);
-            },
-          });
-          this.$auth.logout();
-        } catch (error) {
-          console.log(error);
-        }
-      }
+      // if (this.$refs.LoginForm.validate()) {
+      //   try {
+      //     this.loader = true;
+      //     await this.$auth
+      //       .loginWith("local", {
+      //         data: {
+      //           email: this.loginData.email,
+      //           password: this.loginData.password,
+      //         },
+      //       })
+      //       .finally(() => {
+      //         this.loader = false;
+      //       });
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // }
+      this.$router.push("/restaurants/");
     },
   },
 };

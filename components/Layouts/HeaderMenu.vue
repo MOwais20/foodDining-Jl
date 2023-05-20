@@ -26,7 +26,7 @@
           </template>
 
           <v-divider></v-divider>
-          <v-list-item>
+          <v-list-item @click="logout">
             <v-list-item-title>Logout</v-list-item-title>
           </v-list-item>
         </v-list>
@@ -41,6 +41,12 @@ export default {
     return {
       //userData: this.$auth.$state.user,
     };
+  },
+  methods: {
+    logout() {
+      this.$router.push("/login");
+      this.$auth.logout();
+    },
   },
 };
 </script>
